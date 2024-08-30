@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bousteador Season Card</title>
+    <style>
+        
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: #343a40; /* Black background */
+    display: flex;
+    gap: 20px;
+    
+}
+
+.form-container, .right-content {
+    background: #fff; /* White background for contrast */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(21, 2, 86); /* Adjusted shadow */
+    box-sizing: border-box;
+}
+
+.form-container {
+    max-width: 480px;
+    flex: 1;
+}
+
+.form-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+input[type="text"], input[type="date"], select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.submit-button {
+    padding: 10px;
+    background: #28a745; /* Green submit button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1em;
+}
+
+.submit-button:hover {
+    background: #218838;
+}
+
+.right-content {
+    flex: 2;
+    max-width: 10000px;
+    max-height: 10000px;
+    overflow: auto; /* Allows scrolling */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid #9c0808;
+    text-align: left;
+    white-space: nowrap; /* Prevents text wrapping */
+    text-transform: uppercase; /* Ensure all table text is uppercase */
+}
+
+th {
+    background: #f4f4f4;
+    position: sticky;
+    top: 0; /* Keeps the header fixed on scroll */
+}
+
+.actions button {
+    margin: 0 5px;
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9em;
+}
+
+.actions button:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+.scroll-container {
+    max-height: 450px; /* Adjust height as needed */
+    overflow-y: auto; /* Enables vertical scrolling */
+    color: #000000;
+    
+}
+
+.search-container {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.search-container input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    width: calc(100% - 50px); /* Adjust width to fit the button */
+    box-sizing: border-box;
+}
+
+.search-button {
+    padding: 8px 12px;
+    background: #007bff; /* Dark blue background */
+    color: #fff;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.search-button:hover {
+    background: #0056b3;
+}
+
+.search-button svg {
+    fill: #fff;
+    width: 20px;
+    height: 20px;
+}
+
+.count-container {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1em;
+}
+
+.count-box {
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    color: white; /* Default text color for all boxes */
+}
+
+.count-box i {
+    margin-right: 20px;
+    margin-left: 10px;
+    
+}
+
+/* Specific styles for each box */
+.count-box.total-entries {
+    background-color: rgb(0, 248, 0); /* Light green */
+    margin-right: -20px;
+}
+
+.count-box.reserved {
+    background-color: darkred; /* Dark red */
+    margin-right: -20px;
+}
+
+.count-box.floating {
+    background-color: lightcoral; /* Light red */
+    margin-right: -20px;
+    
+}
+
+.count-box.additional {
+    background-color: darkblue; /* Dark blue */
+    margin-right: -20px;
+}
+
+.count-box.tendam {
+    background-color: lightblue; /* Light blue */
+    margin-right: -20px;
+}
+
+.count-box.block {
+    background-color: darkgoldenrod; 
+    margin-right: -20px;
+}
+
+.count-container span {
+    font-weight: bold;
+}
+
+
+.col-id {
+    min-width: 60px;
+}
+
+.col-name {
+    min-width: 150px;
+}
+
+.col-cardNo {
+    min-width: 100px;
+}
+
+.col-company {
+    min-width: 150px;
+}
+
+.col-mobilePhone {
+    min-width: 120px;
+}
+
+.col-remark {
+    min-width: 150px;
+}
+
+.col-vehicleNo {
+    min-width: 120px;
+}
+
+.col-validFrom, .col-validUntil {
+    min-width: 130px;
+}
+
+.col-bayNo {
+    min-width: 100px;
+}
+
+.col-cardType {
+    min-width: 120px;
+}
+
+.col-actions {
+    min-width: 120px;
+}
+
+
+
+.form-container {
+            width: 1000%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .submit-button {
+            background-color: green;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .toggle-box {
+            margin-top: 30px;
+            margin-left: -240px;
+            padding: 10px;
+            border: 0px solid #ddd;
+            border-radius: 1px;
+            background-color: #f9f9f9;
+            
+        }
+
+        .toggle-box.hidden {
+            display: none;
+            
+        }
+
+        .toggle-button {
+            background-color: darkblue;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: block;
+            
+            
+        }
+
+        .toggle-box label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            
+        }
+
+        .hidden {
+        display: none;
+    }
+
+    .scroll-container {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .submit-button {
+        background-color: green;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+
+
+
+
+     
+    #toggleHomeBox {
+    width: 90%; 
+    max-width: 1231px; 
+    padding: 0px; 
+    margin: 30px auto; 
+    margin-left: -60px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-sidebar {
+    padding: 10px; 
+}
+
+.search-container {
+    margin-bottom: 10px; 
+}
+
+.count-box {
+    font-size: 14px; 
+    padding: 10px; 
+}
+
+.scroll-container {
+    max-height: 430px;
+    overflow-y: auto; 
+    
+}
+
+        
+    </style>
+</head>
+<body>
+
+    <span onclick="toggleBox()" style="cursor: pointer; color: rgb(255, 255, 255);">
+        Season Card Allocation Setting
+    </span>
+    
+    <div id="toggleBox" class="toggle-box hidden" >
+        
+        
+        <div class="scroll-container">
+        
+            <form id="myForm">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" style="text-transform: uppercase;">
+                </div>
+                <div class="form-group">
+                    <label for="cardNo">Card No:</label>
+                    <input type="text" id="cardNo" name="cardNo" style="text-transform: uppercase;">
+                </div>
+                <div class="form-group">
+                    <label>Blocked:</label>
+                    <div>
+                        <input type="radio" id="block" name="Blocked" value="block"> Block
+                    </div>
+                    <div>
+                        <input type="radio" id="unblock" name="Blocked" value=" "> Unblock
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company:</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                <div class="form-group">
+                    <label for="mobilePhone">Mobile Phone:</label>
+                    <input type="text" id="mobilePhone" name="mobilePhone">
+                </div>
+                <div class="form-group">
+                    <label for="remark">Remark:</label>
+                    <input type="text" id="remark" name="remark">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleNo1">Vehicle No:</label>
+                    <input type="text" id="vehicleNo1" name="vehicleNo1">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleNo2">Vehicle No.2:</label>
+                    <input type="text" id="vehicleNo2" name="vehicleNo2">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleNo3">Vehicle No.3:</label>
+                    <input type="text" id="vehicleNo3" name="vehicleNo3">
+                </div>
+                <div class="form-group">
+                    <label for="vehicleNo4">Vehicle No.4:</label>
+                    <input type="text" id="vehicleNo4" name="vehicleNo4">
+                </div>
+                <div class="form-group">
+                    <label for="validFrom">Valid From:</label>
+                    <input type="date" id="validFrom" name="validFrom">
+                </div>
+                <div class="form-group">
+                    <label for="validUntil">Valid Until:</label>
+                    <input type="date" id="validUntil" name="validUntil">
+                </div>
+                <div class="form-group">
+                    <label for="bayNo">Bay No:</label>
+                    <input type="text" id="bayNo" name="bayNo">
+                </div>
+                <div class="form-group">
+                    <label for="cardType">Type of Card:</label>
+                    <select id="cardType" name="cardType">
+                        <option value="">Select Type</option>
+                        <option value="reserved">Reserved</option>
+                        <option value="floating">Floating</option>
+                        <option value="additional">Additional</option>
+                        <option value="tendam">Tendam</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <span onclick="toggleHome()" style="cursor: pointer; color: rgb(255, 255, 255); margin-top: 1px;">
+        Home
+    </span>
+    
+    <div id="toggleHomeBox" class="toggle-box hidden">
+        <div class="right-content">
+            <h2>Data Table</h2>
+            <div class="search-container">
+                <input type="text" id="searchBox" placeholder="Search table...">
+                <button class="search-button" onclick="searchTable()">
+                    <!-- SVG search icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23 21l-5.3-5.3a8.8 8.8 0 1 0-1.4 1.4L21 21l2 2zM2 10.5a8.5 8.5 0 1 1 17 0 8.5 8.5 0 0 1-17 0z"/></svg>
+                </button>
+            </div>
+            <div class="scroll-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <tr>
+                                <th class="col-id">Count</th>
+                                <th class="col-name">Name</th>
+                                <th class="col-cardNo">Card No</th>
+                                <th class="col-blocked">Blocked</th>
+                                <th class="col-company">Company</th>
+                                <th class="col-mobilePhone">Mobile Phone</th>
+                                <th class="col-remark">Remark</th>
+                                <th class="col-vehicleNo">Vehicle No</th>
+                                <th class="col-vehicleNo">Vehicle No.2</th>
+                                <th class="col-vehicleNo">Vehicle No.3</th>
+                                <th class="col-vehicleNo">Vehicle No.4</th>
+                                <th class="col-validFrom">Valid From</th>
+                                <th class="col-validUntil">Valid Until</th>
+                                <th class="col-bayNo">Bay No</th>
+                                <th class="col-cardType">Type of Card</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+    
+    
+    
+    
+    
+    
+    
+    
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <div class="count-container" style="display: flex; gap: 20px; justify-content: space-around;">
+        <div class="count-box total-entries" style="background-color: #D3E4CD; color: #2F4F4F; padding: 20px; flex: 1; text-align: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-list" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <div>Total: <span id="rowCount" style="font-weight: bold;">0</span></div>
+        </div>
+        <div class="count-box reserved" style="background-color: #E6B0AA; color: #2F4F4F; padding: 20px; flex: 1; text-align: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-bookmark" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <div>Reserved: <span id="reservedCount" style="font-weight: bold;">0</span></div>
+        </div>
+        <div class="count-box floating" style="background-color: #F9E79F; color: #2F4F4F; padding: 20px; flex: 1; text-align: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-leaf" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <div>Floating: <span id="floatingCount" style="font-weight: bold;">0</span></div>
+        </div>
+        <div class="count-box additional" style="background-color: #AED6F1; color: #2F4F4F; padding: 20px; flex: 1; text-align: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-plus-circle" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <div>Additional: <span id="additionalCount" style="font-weight: bold;">0</span></div>
+        </div>
+        <div class="count-box tendam" style="background-color: #D5DBDB; color: #2F4F4F; padding: 20px; flex: 1; text-align: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-car" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <div>Tendam: <span id="tendamCount" style="font-weight: bold;">0</span></div>
+        </div>
+        <div class="count-box block" style="background-color: #FADBD8; color: #2F4F4F; padding: 20px; flex: 1; text-align: center; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-ban" style="font-size: 24px; margin-bottom: 10px;"></i>
+            <div>Block: <span id="blockCount" style="font-weight: bold;">0</span></div>
+        </div>
+    </div>
+    
+    
+    </div>
+    
+    
+    
+    
+    
+                    </tbody>
+                </table>
+            </div>
+            <div class="count-container">
+                <div class="count-box total-entries" style="background-color: lightgreen; color: rgb(0, 0, 0);">
+                    <i class="fas fa-list"></i>
+                    <div id="totalEntries">Total Entries: 0</div>
+                </div>
+            </div>
+            
+            </div>
+            
+            
+        </div>
+            
+            </form>
+        </div>
+    </div>
+    
+   
+   
+   
+   
+   
+
+    
+ 
+    <script>
+
+function toggleBox() {
+        var toggleBox = document.getElementById('toggleBox');
+        toggleBox.classList.toggle('hidden');
+    }
+
+    function toggleHome() {
+        var toggleHomeBox = document.getElementById('toggleHomeBox');
+        toggleHomeBox.classList.toggle('hidden');
+    }
+
+
+
+
+
+    
+  
+document.getElementById('searchBox').addEventListener('input', searchTable);
+document.getElementById('searchBox').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        searchTable();
+    }
+});
+
+
+
+
+
+
+function searchTable() {
+    const query = document.getElementById('searchBox').value.toUpperCase();
+    const rows = document.querySelectorAll('#dataTable tbody tr');
+    let matchedRows = 0; // Count of rows that match the search query
+
+    rows.forEach(row => {
+        const cells = row.getElementsByTagName('td');
+        const rowText = Array.from(cells).map(cell => cell.textContent.toUpperCase()).join(' ');
+        if (rowText.includes(query)) {
+            row.style.display = ''; // Show row if it matches the query
+            matchedRows++;
+        } else {
+            row.style.display = 'none'; // Hide row if it doesn't match
+        }
+    });
+
+    // Update total entries count with matched rows
+    document.getElementById('totalEntries').textContent = `Total Entries: ${matchedRows}`;
+}
+
+
+
+
+
+
+
+
+        
+
+function updateRowCount() {
+    const rows = document.querySelectorAll('#dataTable tbody tr');
+    let visibleRows = 0;
+    let reservedCount = 0;
+    let floatingCount = 0;
+    let additionalCount = 0;
+    let tendamCount = 0;
+    let blockCount = 0;
+
+    rows.forEach((row, index) => {
+        if (row.style.display !== 'none') {
+            visibleRows++;
+            row.cells[0].textContent = visibleRows; // Update count column for visible rows
+
+            const cardType = row.cells[14].textContent.trim().toUpperCase();
+            const blockedStatus = row.cells[3].textContent.trim().toUpperCase();
+
+            // Update counts based on cardType and blockedStatus
+            switch (cardType) {
+                case 'RESERVED':
+                    reservedCount++;
+                    break;
+                case 'FLOATING':
+                    floatingCount++;
+                    break;
+                case 'ADDITIONAL':
+                    additionalCount++;
+                    break;
+                case 'TENDAM':
+                    tendamCount++;
+                    break;
+            }
+
+            if (blockedStatus === 'BLOCK') {
+                blockCount++;
+            }
+        }
+    });
+
+    // Update counts on the page
+    document.getElementById('rowCount').textContent = visibleRows;
+    document.getElementById('reservedCount').textContent = reservedCount;
+    document.getElementById('floatingCount').textContent = floatingCount;
+    document.getElementById('additionalCount').textContent = additionalCount;
+    document.getElementById('tendamCount').textContent = tendamCount;
+    document.getElementById('blockCount').textContent = blockCount;
+
+    // Update total entries count
+    document.getElementById('totalEntries').textContent = `Total Entries: ${visibleRows}`;
+}
+
+
+
+        
+
+
+
+
+
+        let editRow = null;
+
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevents actual form submission
+
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value === undefined ? " " : value;
+
+
+});
+
+            if (editRow) {
+                // Update existing row
+                const cells = editRow.getElementsByTagName('td');
+                cells[1].textContent = data.name;
+                cells[2].textContent = data.cardNo;
+                cells[3].textContent = data.Blocked || " "; // Ensure Blocked is not undefined
+                cells[4].textContent = data.company;
+                cells[5].textContent = data.mobilePhone;
+                cells[6].textContent = data.remark;
+                cells[7].textContent = data.vehicleNo1;
+                cells[8].textContent = data.vehicleNo2;
+                cells[9].textContent = data.vehicleNo3;
+                cells[10].textContent = data.vehicleNo4;
+                cells[11].textContent = data.validFrom;
+                cells[12].textContent = data.validUntil;
+                cells[13].textContent = data.bayNo;
+                cells[14].textContent = data.cardType;
+
+                editRow = null; // Reset editRow after update
+            } else {
+                // Add new row
+                const tableBody = document.querySelector('#dataTable tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${tableBody.rows.length + 1}</td> <!-- Count -->
+                    <td>${data.name}</td>
+                    <td>${data.cardNo}</td>
+                    <td>${data.Blocked || " "}</td> <!-- Ensure Blocked is not undefined -->
+                    <td>${data.company}</td>
+                    <td>${data.mobilePhone}</td>
+                    <td>${data.remark}</td>
+                    <td>${data.vehicleNo1}</td>
+                    <td>${data.vehicleNo2}</td>
+                    <td>${data.vehicleNo3}</td>
+                    <td>${data.vehicleNo4}</td>
+                    <td>${data.validFrom}</td>
+                    <td>${data.validUntil}</td>
+                    <td>${data.bayNo}</td>
+                    <td>${data.cardType}</td>
+                    <td class="actions">
+                        <button onclick="editRowFunction(this)">Edit</button>
+                        <button onclick="deleteRowFunction(this)">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(newRow);
+            }
+
+
+
+
+
+
+
+
+
+    // Clear form fields
+    event.target.reset();
+    updateRowCount(); // Update row count after form submission
+        });
+
+        function editRowFunction(button) {
+    editRow = button.closest('tr');
+    const cells = editRow.getElementsByTagName('td');
+    document.getElementById('name').value = cells[1].textContent;
+    document.getElementById('cardNo').value = cells[2].textContent;
+
+    // Set radio button value
+    const blockedStatus = cells[3].textContent.trim().toUpperCase();
+document.getElementById('block').checked = (blockedStatus === 'block');
+document.getElementById('unblock').checked = (blockedStatus !== 'block'); // Ini memastikan 'unblock' dipilih jika bukan 'block'
+
+
+
+    document.getElementById('company').value = cells[4].textContent;
+    document.getElementById('mobilePhone').value = cells[5].textContent;
+    document.getElementById('remark').value = cells[6].textContent;
+    document.getElementById('vehicleNo1').value = cells[7].textContent;
+    document.getElementById('vehicleNo2').value = cells[8].textContent;
+    document.getElementById('vehicleNo3').value = cells[9].textContent;
+    document.getElementById('vehicleNo4').value = cells[10].textContent;
+    document.getElementById('validFrom').value = cells[11].textContent;
+    document.getElementById('validUntil').value = cells[12].textContent;
+    document.getElementById('bayNo').value = cells[13].textContent;
+    document.getElementById('cardType').value = cells[14].textContent;
+}
+
+
+
+
+
+
+
+        function deleteRowFunction(button) {
+            if (confirm('Are you sure you want to delete this row?')) {
+                button.closest('tr').remove();
+                updateRowCount(); // Update row count after deletion
+            }
+        }
+    </script>
+</body>
+</html>
